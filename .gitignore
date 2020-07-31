@@ -20,3 +20,17 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+db.sqlite3
+/dist
+/venv
+__pycache__
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
