@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import LetterBox from "./LetterBox.vue";
 import { confetti } from "dom-confetti";
 import _ from "lodash";
@@ -49,18 +50,44 @@ export default {
   props: {
     msg: String,
   },
+  created() {
+    console.log("fetching game data");
+    this.fetchGame();
+  },
   data: function () {
     return {
-      letters: ["Z", "P", "A", "C", "H", "U"],
-      centerLetter: "T",
+      letters: ["", "", "", "", "", ""],
+      centerLetter: "",
       enteredLetters: "",
-      answers: ["chat", "attach"],
+      answers: [],
       foundWords: [],
     };
   },
   computed: {
+    totalScore: function () {
+      let score = 0;
+      this.answers.forEach((ans) => {
+        if (ans.length === 4) {
+          score += 1;
+        } else {
+          score += ans.length;
+        }
+      });
+      return score;
+    },
+    currScore: function () {
+      let score = 0;
+      this.foundWords.forEach((ans) => {
+        if (ans.length === 4) {
+          score += 1;
+        } else {
+          score += ans.length;
+        }
+      });
+      return score;
+    },
     gameProgress: function () {
-      return (this.foundWords.length / this.answers.length) * 100;
+      return Math.ceil((this.currScore / this.totalScore) * 100);
     },
   },
   watch: {
@@ -75,6 +102,21 @@ export default {
     },
   },
   methods: {
+    fetchGame: async function () {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/game/5f3215d933450b6c439beca3/"
+        );
+        console.log(response.data);
+        this.letters = response.data.letters.filter(
+          (c) => c != response.data.centerLetter
+        );
+        this.centerLetter = response.data.centerLetter;
+        this.answers = response.data.answers;
+      } catch (err) {
+        console.log(err);
+      }
+    },
     increment: function () {
       this.$store.commit("increment");
       console.log(this.$store.state.count);
