@@ -1,0 +1,8 @@
+.header-text {
+    color: blue;
+    text-align: center;
+}
+
+.generate-form > button {
+    margin: 10px auto;
+}
