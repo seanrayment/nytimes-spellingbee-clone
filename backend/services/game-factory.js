@@ -1,16 +1,8 @@
 require('dotenv').config();
-const Game = require('./models/game');
+const Game = require('../models/game');
 const mongoose = require('mongoose');
 const readline = require('readline');
 const fs = require('fs');
-
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true
-});
-const db = mongoose.connection;
-
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log('Connected to the db'));
 
 let words = [];
 let pangrams = [];
@@ -26,7 +18,7 @@ async function processWords() {
     for await (const line of rl) {
         const word = line.trim();
         words.push(word);
-        cset = new Set(word.split(''));
+        const cset = new Set(word.split(''));
         if (cset.size === 7) {
             pangrams.push(word)
         }
@@ -66,7 +58,7 @@ async function findAnswers(letters, centerLetter) {
 async function createGame(pangram) {
     const cset = new Set(pangram.trim().split(''));
     const letters = Array.from(cset);
-    const centerLetter = letters[Math.floor(Math.random() * letters.length)]
+    const centerLetter = letters[Math.floor(Math.random() * letters.length)];
     const answers = await findAnswers(letters, centerLetter);
     const gamePangrams = [];
     gamePangrams.push(pangram);
@@ -79,16 +71,25 @@ async function createGame(pangram) {
     });
     try {
         const newGame = await game.save();
-        console.log(newGame);
+        return newGame;
     } catch (err) {
         console.log(err);
     }
 }
 
 async function buildGame() {
+    mongoose.connect(process.env.DATABASE_URL, {
+        useNewUrlParser: true
+    });
+    const db = mongoose.connection;
+    
+    db.on('error', (error) => console.error(error));
+    db.once('open', () => console.log('Connected to the db'));
+    
     await processWords();
-    await createGame(pangrams[Math.floor(Math.random() * pangrams.length)]);
+    const newGame = await createGame(pangrams[Math.floor(Math.random() * pangrams.length)]);
     mongoose.connection.close();
+    return newGame;
 }
 
-buildGame();
+exports.buildGame = buildGame;

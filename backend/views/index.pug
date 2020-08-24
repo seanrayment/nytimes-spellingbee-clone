@@ -1,8 +1,22 @@
 html
     include includes/head.pug
     body
-        h1(class='header-text') Spelling Bee Admin
+        div(class='header-container')
+            h1(class='header-text') Spelling Bee Admin
 
     div(class="form-wrapper")
-        form(class="form-inline generate-form")
+        form(id="board-generate-form", class="form-inline generate-form", action="/game")
             button(type="submit", class="btn btn-primary mb-2") Generate board
+    
+    div(class="d-flex justify-content-center")
+        div(class="spinner-border create-spinner hide", role="status")
+            span(class="sr-only") Loading...
+    
+    div(class="word-selector-container")
+        div(class="row justify-content-md-center")
+            div(class="form-group col-sm-12 col-md-6 obscure-word-form")
+                label(for="obscure-word-selector") Select obscure words to be removed
+                select(multiple="true", class="form-control", id="obscure-word-selector")
+                    option asinine
+                    option jollyrancher
+                button(type="submit", class="btn btn-primary mb-2") Remove Words

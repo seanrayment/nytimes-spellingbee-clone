@@ -1,8 +1,22 @@
+.header-container {
+    padding: 25px;
+}
+
 .header-text {
-    color: blue;
+    color: black;
     text-align: center;
+    font-size: calc(2vw + 1.5em);
 }
 
 .generate-form > button {
     margin: 10px auto;
+}
+
+.hide {
+    display: none;
+}
+
+.obscure-word-form > button {
+    margin-top: 15px;
+    float: right;
 }

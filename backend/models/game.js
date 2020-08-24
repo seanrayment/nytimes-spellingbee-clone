@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require('moment');
 
 const gameSchema = new mongoose.Schema({
     pangrams: {
@@ -22,7 +23,12 @@ const gameSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true,
-        default: Date.now
+        default: moment().format("YYYY-MM-DD"),
+    },
+    draft: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 });
 
