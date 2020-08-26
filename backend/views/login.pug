@@ -1,10 +1,10 @@
 html
     include includes/head.pug
     body
-        if success_messages
-            .alert.alert-sucess=success_messages
-        if error_messages
-            .alert.alert-danger=error_messages
+        if success_messages.length > 0
+            .alert.alert-success #{success_messages}
+        if error_messages.length > 0
+            .alert.alert-danger #{error_messages}
         .header-container
             .header-text Spelling Bee Admin
         .container 
