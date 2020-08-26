@@ -16,4 +16,3 @@ $(document).ready(function () {
 		console.log('this form was stopped from submitting');
 	});
 });
-

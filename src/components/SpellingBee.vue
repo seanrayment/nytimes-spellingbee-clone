@@ -105,7 +105,7 @@ export default {
     fetchGame: async function () {
       try {
         const response = await axios.get(
-          "http://localhost:3000/game/5f35b792d21035b6b94fd428/"
+          "http://localhost:3000/game/5f46d6738d1d633cc8931ec5/"
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
