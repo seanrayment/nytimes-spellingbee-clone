@@ -1,13 +1,30 @@
 $(document).ready(function () {
+	$("#obscure-word-form").bind('submit', function (e) {
+		e.preventDefault();
+		console.log('submitting remove obscure word form');
+		let $form = $(this);
+		let url = $form.attr('action');
+		let posting = $.post(url, $form.serialize());
+		posting.done(function (data) {
+			console.log(data);
+			$("#obscure-word-selector").empty();
+			populateForm(data);
+		});
+		posting.fail(function (err) {
+			console.log(err);
+		});
+	});
+
 	$("#board-generate-form").bind('submit', function (e) {
 		e.preventDefault();
-		var $form = $(this);
-		var url = $form.attr('action');
-		var posting = $.post(url);
+		let $form = $(this);
+		let url = $form.attr('action');
+		let posting = $.post(url);
 		$(".create-spinner").toggleClass("hide");
 		posting.done(function (data) {
 			$(".create-spinner").toggleClass("hide");
 			console.log(data);
+			populateForm(data);
 		});
 		posting.fail(function () {
 			$(".create-spinner").toggleClass("hide");
@@ -16,3 +33,17 @@ $(document).ready(function () {
 		console.log('this form was stopped from submitting');
 	});
 });
+
+function populateForm(data) {
+	let $selector = $("#obscure-word-selector");
+	let $form = $("#obscure-word-form");
+	let url = "/game/" + data._id + "/remove";
+	$form.attr("action", url)
+	console.log($form.attr('action'));
+	for (let i = 0; i < data.answers.length; i++) {
+		const optionItem = document.createElement("option");
+		const optionText = document.createTextNode(data.answers[i]);
+		optionItem.appendChild(optionText);
+		$selector.append(optionItem);
+	}
+}

@@ -66,6 +66,7 @@ app.use('/users', usersRouter);
 app.get('/admin', function (req, res) {
 
   if (_.get(req, 'session.passport.user')) {
+    console.log(req.session.passport.user);
     return res.render('index', {
       user: req.session.passport.user
     });

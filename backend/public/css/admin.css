@@ -16,7 +16,15 @@
     display: none;
 }
 
+.obscure-word-form {
+    margin: 20px;
+}
+
 .obscure-word-form>button {
     margin-top: 15px;
     float: right;
+}
+
+#obscure-word-selector {
+    height: 60vh;
 }

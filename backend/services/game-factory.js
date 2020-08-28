@@ -3,6 +3,7 @@ const Game = require('../models/game');
 const mongoose = require('mongoose');
 const readline = require('readline');
 const fs = require('fs');
+const _ = require('lodash');
 
 let words = [];
 let pangrams = [];
@@ -78,17 +79,8 @@ async function createGame(pangram) {
 }
 
 async function buildGame() {
-    mongoose.connect(process.env.DATABASE_URL, {
-        useNewUrlParser: true
-    });
-    const db = mongoose.connection;
-    
-    db.on('error', (error) => console.error(error));
-    db.once('open', () => console.log('Connected to the db'));
-    
     await processWords();
     const newGame = await createGame(pangrams[Math.floor(Math.random() * pangrams.length)]);
-    mongoose.connection.close();
     return newGame;
 }
 

@@ -14,9 +14,9 @@ html
     
     div(class="word-selector-container")
         div(class="row justify-content-md-center")
-            div(class="form-group col-sm-12 col-md-6 obscure-word-form")
-                label(for="obscure-word-selector") Select obscure words to be removed
-                select(multiple="true", class="form-control", id="obscure-word-selector")
-                    option asinine
-                    option jollyrancher
-                button(type="submit", class="btn btn-primary mb-2") Remove Words
+            form#obscure-word-form
+                div(class="form-group col-sm-12 col-md-6 obscure-word-form")
+                    label(for="obscure-word-selector") Select obscure words to be removed
+                    select(multiple="true", name="word" class="form-control", id="obscure-word-selector")
+
+                    button(type="submit", class="btn btn-primary mb-2") Remove Words

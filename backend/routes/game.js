@@ -2,12 +2,42 @@ const express = require('express');
 const router = express.Router();
 const Game = require('../models/game.js');
 const moment = require('moment');
-const { buildGame } = require('../services/game-factory');
+const {
+    buildGame
+} = require('../services/game-factory');
+
+router.post('/:id/remove', async (req, res) => {
+    try {
+        console.log('received a request to remove a game');
+        console.log(req.body);
+        if (typeof req.body.word === "string") {
+            req.body.word = [req.body.word];
+        }
+        const game = await Game.findByIdAndUpdate({
+            _id: req.params.id
+        }, {
+            $pullAll: {
+                'answers': req.body.word
+            }
+        }, {
+            new: true
+        });
+        res.json(game);
+
+    } catch (err) {
+        return res.status(500).json({
+            message: err.message,
+        })
+    }
+});
 
 router.get('/today', async (req, res) => {
     try {
         console.log('received a request for today\'s game');
-        const game = await Game.findOne({date: new Date(moment().format("YYYY-MM-DD")), draft: false});
+        const game = await Game.findOne({
+            date: new Date(moment().format("YYYY-MM-DD")),
+            draft: false
+        });
         if (game == null) {
             return res.status(404).json({
                 message: `No game found for today: ${req.params.date}`
@@ -25,7 +55,10 @@ router.get('/today', async (req, res) => {
 router.get('/date/:date', async (req, res) => {
     try {
         console.log('received a request for a game by its date');
-        const game = await Game.findOne({date: new Date(req.params.date), draft: false});
+        const game = await Game.findOne({
+            date: new Date(req.params.date),
+            draft: false
+        });
         if (game == null) {
             return res.status(404).json({
                 message: `No game found for the date: ${req.params.date}`
@@ -61,7 +94,9 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         console.log('received a request for all the games');
-        const games = await Game.find({draft: false});
+        const games = await Game.find({
+            draft: false
+        });
         if (games == null) {
             return res.status(404).json({
                 message: 'No games were found'
