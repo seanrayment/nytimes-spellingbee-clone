@@ -1,12 +1,8 @@
 require('dotenv').config();
 const Game = require('../models/game');
-const mongoose = require('mongoose');
 const readline = require('readline');
+const mongoose = require('mongoose');
 const fs = require('fs');
-const _ = require('lodash');
-
-let words = [];
-let pangrams = [];
 
 async function processWords() {
     const fileStream = fs.createReadStream('./words.txt', 'latin1');
@@ -16,53 +12,67 @@ async function processWords() {
         crlfDelay: Infinity
     });
 
+    let dictWords = [];
+    let pangrams = [];
+
     for await (const line of rl) {
         const word = line.trim();
-        words.push(word);
+        dictWords.push(word);
         const cset = new Set(word.split(''));
         if (cset.size === 7) {
-            pangrams.push(word)
+            pangrams.push(word);
         }
     }
+
+    return [dictWords, pangrams];
 }
 
 function validWord(word, cset, centerLetter) {
-    // console.log(`Testing ${word.split('')} against ${Array.from(cset)}`);
-    const wordChars = new Set(word.split(''));
+    const wordChars = new Set(word);
     if (!wordChars.has(centerLetter)) {
         return false;
     }
-    for (let char of word.split('')) {
+    for (let char of word) {
         if (!(cset.has(char))) {
-            console.log(`${Array.from(cset)} does not contain ${char} from ${word}`);
             return false;
         }
     }
     return true;
 }
 
-async function findAnswers(letters, centerLetter) {
+function isPangram(word, letters) {
+    const a = new Set(word);
+    const b = new Set(letters);
+    // sets are equal if same size and one is subset of other
+    return (a.size === b.size && [...a].every(c => b.has(c)));
+}
+
+async function findAnswersAndPangrams(letters, centerLetter, words) {
     const cset = new Set(letters);
+    let pangrams = [];
     let validWords = [];
-    words.forEach(async (word, i) => {
+    words.forEach(async (word) => {
         const valid = await validWord(word, cset, centerLetter);
         if ((word.length > 3) && valid) {
-            validWords.push(word)
-        } else {
-            console.log(`${word} is not valid`);
+            validWords.push(word);
+            if (isPangram(word, letters)) {
+                pangrams.push(word);
+            }
         }
     });
 
-    return validWords;
+    return [validWords, pangrams];
 }
 
-async function createGame(pangram) {
+function randomElement(wordArr) {
+    return wordArr[Math.floor(Math.random() * wordArr.length)];
+}
+
+async function createGame(pangram, words) {
     const cset = new Set(pangram.trim().split(''));
     const letters = Array.from(cset);
-    const centerLetter = letters[Math.floor(Math.random() * letters.length)];
-    const answers = await findAnswers(letters, centerLetter);
-    const gamePangrams = [];
-    gamePangrams.push(pangram);
+    const centerLetter = randomElement(letters);
+    const [answers, gamePangrams] = await findAnswersAndPangrams(letters, centerLetter, words);
 
     const game = new Game({
         pangrams: gamePangrams,
@@ -70,8 +80,10 @@ async function createGame(pangram) {
         centerLetter: centerLetter,
         answers: answers
     });
+    console.log(`New Game: ${game}`);
     try {
         const newGame = await game.save();
+        console.log(newGame);
         return newGame;
     } catch (err) {
         console.log(err);
@@ -79,8 +91,8 @@ async function createGame(pangram) {
 }
 
 async function buildGame() {
-    await processWords();
-    const newGame = await createGame(pangrams[Math.floor(Math.random() * pangrams.length)]);
+    const [dictWords, dictPangrams] = await processWords();
+    const newGame = await createGame(dictPangrams[Math.floor(Math.random() * dictPangrams.length)], dictWords);
     return newGame;
 }
 
