@@ -1145,6 +1145,13 @@
   dependencies:
     "@vue/cli-shared-utils" "^4.4.6"
 
+"@vue/cli-plugin-router@~4.5.0":
+  version "4.5.6"
+  resolved "https://registry.npm.taobao.org/@vue/cli-plugin-router/download/@vue/cli-plugin-router-4.5.6.tgz?cache=0&sync_timestamp=1599743369418&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fcli-plugin-router%2Fdownload%2F%40vue%2Fcli-plugin-router-4.5.6.tgz#96f43cdeea6931ae25adb065dd757d6ff4f81354"
+  integrity sha1-lvQ83uppMa4lrbBl3XV9b/T4E1Q=
+  dependencies:
+    "@vue/cli-shared-utils" "^4.5.6"
+
 "@vue/cli-plugin-vuex@^4.4.6", "@vue/cli-plugin-vuex@~4.4.0":
   version "4.4.6"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.4.6.tgz#44b596f0d5236e0a2ce1aa4757bda5207c230be0"
@@ -1212,6 +1219,24 @@
   version "4.4.6"
   resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-4.4.6.tgz#0ec59880920736c6dd79079ac0b5ceac29fa55e1"
   integrity sha512-ba+FZZCjiTSu2otnLjY4qXqASe7ZIQ/QBljk5oRPgqrR0p1NUkDPUcZhqa041aOaSW1yAfSfhOD7Q84nMnWhzQ==
+  dependencies:
+    "@hapi/joi" "^15.0.1"
+    chalk "^2.4.2"
+    execa "^1.0.0"
+    launch-editor "^2.2.1"
+    lru-cache "^5.1.1"
+    node-ipc "^9.1.1"
+    open "^6.3.0"
+    ora "^3.4.0"
+    read-pkg "^5.1.1"
+    request "^2.88.2"
+    semver "^6.1.0"
+    strip-ansi "^6.0.0"
+
+"@vue/cli-shared-utils@^4.5.6":
+  version "4.5.6"
+  resolved "https://registry.npm.taobao.org/@vue/cli-shared-utils/download/@vue/cli-shared-utils-4.5.6.tgz?cache=0&sync_timestamp=1599743327314&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fcli-shared-utils%2Fdownload%2F%40vue%2Fcli-shared-utils-4.5.6.tgz#14644972043c95566788d07d9a9367edd438a4d6"
+  integrity sha1-FGRJcgQ8lVZniNB9mpNn7dQ4pNY=
   dependencies:
     "@hapi/joi" "^15.0.1"
     chalk "^2.4.2"
@@ -2442,7 +2467,7 @@ commander@2.17.x:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
   integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
 
-commander@^2.18.0, commander@^2.19.0, commander@^2.20.0:
+commander@^2.18.0, commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -6977,11 +7002,6 @@ semver@^6.0.0, semver@^6.1.0, semver@^6.1.2, semver@^6.3.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
-semver@^7.1.1:
-  version "7.3.2"
-  resolved "https://registry.npm.taobao.org/semver/download/semver-7.3.2.tgz#604962b052b81ed0786aae84389ffba70ffd3938"
-  integrity sha1-YElisFK4HtB4aq6EOJ/7pw/9OTg=
-
 send@0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/send/-/send-0.17.1.tgz#c1d8b059f7900f7466dd4938bdc44e11ddb376c8"
@@ -8030,15 +8050,6 @@ vue-cli-plugin-element@~1.0.1:
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-element/-/vue-cli-plugin-element-1.0.1.tgz#34e58fb65b36cf59afaf14f503288e5e578b1554"
   integrity sha512-OJSOnJtn7f1v/8xX+MJae+RrE8WguhiiG9QTBx/MNOPXYsxqut6Ommo+ZD3raNc7eryhqdM2T/DlMfdvIKpCtw==
 
-vue-cli-plugin-storybook@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.npm.taobao.org/vue-cli-plugin-storybook/download/vue-cli-plugin-storybook-1.2.2.tgz#dad9d628fd58712981b44d370eaa4881deffdeec"
-  integrity sha1-2tnWKP1YcSmBtE03DqpIgd7/3uw=
-  dependencies:
-    chalk "^3.0.0"
-    commander "^2.19.0"
-    semver "^7.1.1"
-
 vue-eslint-parser@^7.0.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.1.0.tgz#9cdbcc823e656b087507a1911732b867ac101e83"
@@ -8066,6 +8077,11 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-router@^3.2.0:
+  version "3.4.3"
+  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.4.3.tgz#fa93768616ee338aa174f160ac965167fa572ffa"
+  integrity sha1-+pN2hhbuM4qhdPFgrJZRZ/pXL/o=
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"

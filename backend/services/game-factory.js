@@ -23,7 +23,6 @@ async function processWords() {
             pangrams.push(word);
         }
     }
-
     return [dictWords, pangrams];
 }
 

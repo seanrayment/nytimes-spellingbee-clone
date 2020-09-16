@@ -63,6 +63,8 @@ app.use('/users', usersRouter);
 
 app.get('/admin', function (req, res) {
 
+  console.log(`auth status: ${req.isAuthenticated()}`);
+
   if (_.get(req, 'session.passport.user')) {
     console.log(req.session.passport.user);
     return res.render('index', {
