@@ -7,6 +7,9 @@ const {
 } = require('../services/game-factory');
 
 router.post('/:id/remove', async (req, res) => {
+    if (!req.isAuthenticated) {
+        res.redirect('/users/login');
+    }
     try {
         console.log('received a request to remove a game');
         console.log(req.body);
@@ -22,8 +25,7 @@ router.post('/:id/remove', async (req, res) => {
         }, {
             new: true
         });
-        res.json(game);
-
+        res.render('game', { user: req.user.email, game: game });
     } catch (err) {
         return res.status(500).json({
             message: err.message,

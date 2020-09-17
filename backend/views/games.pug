@@ -1,0 +1,18 @@
+extends index.pug
+
+block content
+	.current-games
+		ul.current-games-list
+			each game in games
+				li.game-property= "Draft: " + game.draft
+				li.game-property
+					a(href= "/admin/" + game._id)= game.date
+				li.game-properties
+					div answers
+						ul.game-answers
+							each answer in game.answers
+								li.game-answer= answer
+					div pangrams
+						ul.game-pangrams
+							each pangram in game.pangrams
+								li.game-pangram= pangram

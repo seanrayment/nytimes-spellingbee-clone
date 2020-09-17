@@ -61,26 +61,31 @@ app.use('/game', gameRouter);
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
-app.get('/admin', function (req, res) {
+const adminRouter = require('./routes/admin');
+app.use('/admin', adminRouter);
 
-  console.log(`auth status: ${req.isAuthenticated()}`);
+// app.get('/admin', function (req, res) {
 
-  if (_.get(req, 'session.passport.user')) {
-    console.log(req.session.passport.user);
-    return res.render('index', {
-      user: req.session.passport.user
-    });
-  }
+//   console.log(`auth status: ${req.isAuthenticated()}`);
 
-  if (req.user) {
-    console.log(req.user)
-    return res.render('index', {
-      user: req.user.email,
-    })
-  }
-  req.flash('error', 'Please log in to access authorized content.')
-  res.redirect('/users/login');
-});
+//   // if (_.get(req, 'session.passport.user')) {
+//   //   console.log(req.session.passport.user);
+//   //   return res.render('index', {
+//   //     user: req.session.passport.user,
+//   //     games: ["first", "second", "third"]
+//   //   });
+//   // }
+
+//   if (req.user) {
+//     console.log(req.user)
+//     return res.render('index', {
+//       user: req.user.email,
+//       games: ["first", "second", "third"]
+//     })
+//   }
+//   req.flash('error', 'Please log in to access authorized content.')
+//   res.redirect('/users/login');
+// });
 
 app.use(function (req, res, next) {
   res.status(404).send("Hmm this page does not exist");

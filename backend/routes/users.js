@@ -10,6 +10,57 @@ const userSchema = Joi.object({
     confirmationPassword: Joi.ref('password')
 });
 
+/*
+auth API for use in a single page application
+*/
+router.route('/api/register')
+    .post(async (req, res, next) => {
+
+        // email validation and passwords match
+        const result = userSchema.validate(req.body);
+
+        // catch duplicate email explicitly
+        const user = await User.findOne({
+            'email': result.value.email
+        });
+        if (user) {
+            req.flash('error', 'Email is already in use.')
+            res.redirect('/users/register')
+        }
+
+        const newUser = await new User(result.value);
+        try {
+            await User.register(newUser, result.value.password);
+        } catch (err) {
+            next(err);
+        }
+
+        // explicitly call passport authenticate middleware
+        // remember that middleware is just a function that
+        // takes a req, res, and function to call next. Calling
+        // authenticate returns the middleware function, which
+        // we are in turn calling and propogating the req and res
+        // from the original POST above
+        passport.authenticate('local')(req, res, function() {
+            res.json(newUser);
+        });
+    });
+
+router.route('/api/login')
+    // get the user stored with the cookie
+    .get((req, res) => {
+        console.log("attemping to get logged in user");
+        res.json(req.user);
+    })
+    // login request
+    .post(passport.authenticate('local'), (req, res) => {
+        console.log(req);
+        res.json(req.user);
+    })
+
+/*
+auth endpoints that return HTML with user context
+*/
 router.route('/register')
     .get((req, res) => {
         res.render('register')
