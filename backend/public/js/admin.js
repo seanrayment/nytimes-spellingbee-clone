@@ -1,19 +1,19 @@
 $(document).ready(function () {
-	$("#obscure-word-form").bind('submit', function (e) {
-		e.preventDefault();
-		console.log('submitting remove obscure word form');
-		let $form = $(this);
-		let url = $form.attr('action');
-		let posting = $.post(url, $form.serialize());
-		posting.done(function (data) {
-			console.log(data);
-			$("#obscure-word-selector").empty();
-			populateForm(data);
-		});
-		posting.fail(function (err) {
-			console.log(err);
-		});
-	});
+	// $("#obscure-word-form").bind('submit', function (e) {
+	// 	console.log('submitting remove obscure word form');
+	// 	e.preventDefault();
+	// 	let $form = $(this);
+	// 	let url = $form.attr('action');
+	// 	$form.submit();
+	// 	// posting.done(function (data) {
+	// 	// 	console.log(data);
+	// 	// 	$("#obscure-word-selector").empty();
+	// 	// 	populateForm(data);
+	// 	// });
+	// 	// posting.fail(function (err) {
+	// 	// 	console.log(err);
+	// 	// });
+	// });
 
 	$("#board-generate-form").bind('submit', function (e) {
 		e.preventDefault();

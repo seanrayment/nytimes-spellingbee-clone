@@ -24,6 +24,6 @@ router.route('/:id')
 		const game = await Game.findById(req.params.id);
 		console.log(game)
 		res.render('game', { user: req.user.email, game: game });
-	})
+	});
 
 module.exports = router

@@ -7,16 +7,17 @@ const {
 } = require('../services/game-factory');
 
 router.post('/:id/remove', async (req, res) => {
-    if (!req.isAuthenticated) {
+    if (!(req.isAuthenticated())) {
         res.redirect('/users/login');
     }
+    console.log(req.isAuthenticated())
     try {
         console.log('received a request to remove a game');
         console.log(req.body);
         if (typeof req.body.word === "string") {
             req.body.word = [req.body.word];
         }
-        const game = await Game.findByIdAndUpdate({
+        let game = await Game.findByIdAndUpdate({
             _id: req.params.id
         }, {
             $pullAll: {
@@ -25,8 +26,11 @@ router.post('/:id/remove', async (req, res) => {
         }, {
             new: true
         });
-        res.render('game', { user: req.user.email, game: game });
+        console.log(game)
+        res.setHeader('Cache-Control', 'no-cache');
+        res.render('game', { user: 'req.user.email', game: game });
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             message: err.message,
         })

@@ -4,7 +4,7 @@ block content
 
 	div(class="word-selector-container")
 		div(class="row justify-content-center")
-			form(id="obscure-word-form", class="col-sm-10 col-md-6", action="/game/" + game._id + "/remove/")
+			form(id="obscure-word-form", class="col-sm-10 col-md-6", action="/game/" + game._id + "/remove/", method="POST")
 				div(class="form-group col-sm-12 col-md-12 obscure-word-form")
 					label(for="obscure-word-selector") Select obscure or offensive words to be removed
 					select(multiple="true", name="word" class="form-control", id="obscure-word-selector")
