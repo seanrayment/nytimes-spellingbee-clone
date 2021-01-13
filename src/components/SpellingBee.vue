@@ -51,8 +51,14 @@ export default {
     msg: String,
   },
   created() {
+    console.log(this.$route.params);
     console.log("fetching game data");
     this.fetchGame();
+    let self = this
+    window.addEventListener('keyup', (event) => {
+      console.log(event.key);
+      self.keyPressed(event.key);
+    });
   },
   data: function () {
     return {
@@ -102,10 +108,12 @@ export default {
     },
   },
   methods: {
+
     fetchGame: async function () {
       try {
+        console.log(this.$route.params.gameId)
         const response = await axios.get(
-          "http://localhost:3000/game/5f46d6738d1d633cc8931ec5/"
+          `http://localhost:3000/game/${this.$route.params.gameId}/`
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
@@ -117,6 +125,7 @@ export default {
         console.log(err);
       }
     },
+
     increment: function () {
       this.$store.commit("increment");
       console.log(this.$store.state.count);
@@ -128,6 +137,16 @@ export default {
 
     letterClicked: function (letter) {
       this.enteredLetters += letter;
+    },
+
+    keyPressed: function (letter) {
+      if ((this.letters + this.centerLetter).includes(letter)) {
+        this.enteredLetters += letter;
+      } else if (letter == 'Backspace' || letter == 'Delete') {
+        this.backspace();
+      } else if (letter == 'Enter') {
+        this.checkAnswer();
+      }
     },
 
     backspace: function () {
@@ -168,6 +187,20 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.found-words {
+  overflow-x: scroll;
+  max-width: 400px;
+  border: 1px solid #ddd;
+  margin: 20px auto;
+  margin-top: 40px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.found-word {
+  display: inline;
 }
 
 .game-container {

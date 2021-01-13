@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SpellingBee from '../components/SpellingBee.vue'
+import GamePicker from '../components/GamePicker.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{
-    path: '/',
-    name: 'Home',
-    component: SpellingBee
+const routes = [
+  {
+    path: '/games',
+    name: 'games',
+    component: GamePicker
   },
+
+  {
+    path: '/:gameId',
+    name: 'home',
+    component: SpellingBee
+  }
   // {
   //   path: '/about',
   //   name: 'About',
