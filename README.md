@@ -1,4 +1,4 @@
-# spelling-bee
+# Spelling Bee
 
 ## Project setup
 ```
