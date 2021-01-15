@@ -81,6 +81,11 @@ export default {
       });
       return score;
     },
+
+    winningScore: function () {
+      return Math.min(Math.floor(0.6 * this.totalScore), 200);
+    },
+
     currScore: function () {
       let score = 0;
       this.foundWords.forEach((ans) => {
@@ -93,13 +98,13 @@ export default {
       return score;
     },
     gameProgress: function () {
-      return Math.ceil((this.currScore / this.totalScore) * 100);
+      return Math.floor(this.currScore / this.winningScore) * 100;
     },
   },
   watch: {
     // whenever question changes, this function will run
-    foundWords: function (newWords) {
-      if (newWords.length === this.answers.length) {
+    foundWords: function () {
+      if (this.currScore >= this.winningScore) {
         confetti(this.$refs.confetti, {
           duration: 5000,
           elementCount: 200,
@@ -194,7 +199,8 @@ a {
 }
 
 .found-words {
-  overflow-x: scroll;
+  /*overflow-x: scroll;*/
+  text-overflow: ellipsis;
   max-width: 400px;
   border: 1px solid #ddd;
   margin: 20px auto;

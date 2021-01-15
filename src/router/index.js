@@ -16,6 +16,10 @@ const routes = [
     path: '/:gameId',
     name: 'home',
     component: SpellingBee
+  },
+  {
+    path: '*',
+    redirect: '/games',
   }
   // {
   //   path: '/about',
@@ -28,6 +32,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
