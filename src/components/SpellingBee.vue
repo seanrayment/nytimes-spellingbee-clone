@@ -113,7 +113,7 @@ export default {
       try {
         console.log(this.$route.params.gameId)
         const response = await axios.get(
-          `http://localhost:3000/game/${this.$route.params.gameId}/`
+          `http://dee219f3c20e.ngrok.io/game/${this.$route.params.gameId}/`
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
@@ -189,6 +189,10 @@ a {
   color: #42b983;
 }
 
+.hello {
+  overflow: hidden !important;
+}
+
 .found-words {
   overflow-x: scroll;
   max-width: 400px;
@@ -209,6 +213,7 @@ a {
   height: 90vh;
   min-height: 750px;
   max-height: 960px;
+  overflow: hidden !important;
 }
 
 .board-container {
