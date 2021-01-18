@@ -11,9 +11,7 @@
       </div>
 
       <div ref="game" class="board-container">
-        <ul class="found-words">
-          <li v-for="word in foundWords" :key="word" class="found-word">{{ word }}</li>
-        </ul>
+        <FoundWords :foundWords="foundWords" />
         <div class="letters-container">
           <LetterBox
             v-on:letter-clicked="letterClicked"
@@ -39,6 +37,7 @@
 <script>
 import axios from "axios";
 import LetterBox from "./LetterBox.vue";
+import FoundWords from "./FoundWords.vue";
 import { confetti } from "dom-confetti";
 import _ from "lodash";
 
@@ -46,6 +45,7 @@ export default {
   name: "SpellingBee",
   components: {
     LetterBox,
+    FoundWords
   },
   props: {
     msg: String,
@@ -55,7 +55,7 @@ export default {
     console.log("fetching game data");
     this.fetchGame();
     let self = this
-    window.addEventListener('keyup', (event) => {
+    window.addEventListener('keydown', (event) => {
       console.log(event.key);
       self.keyPressed(event.key);
     });
@@ -98,7 +98,7 @@ export default {
       return score;
     },
     gameProgress: function () {
-      return Math.floor(this.currScore / this.winningScore) * 100;
+      return Math.floor(this.currScore / this.winningScore * 100);
     },
   },
   watch: {
@@ -118,7 +118,7 @@ export default {
       try {
         console.log(this.$route.params.gameId)
         const response = await axios.get(
-          `http://dee219f3c20e.ngrok.io/game/${this.$route.params.gameId}/`
+          `http://localhost:3000/game/${this.$route.params.gameId}/`
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
@@ -195,22 +195,7 @@ a {
 }
 
 .hello {
-  overflow: hidden !important;
-}
-
-.found-words {
-  /*overflow-x: scroll;*/
-  text-overflow: ellipsis;
-  max-width: 400px;
-  border: 1px solid #ddd;
-  margin: 20px auto;
-  margin-top: 40px;
-  border-radius: 8px;
-  padding: 10px;
-}
-
-.found-word {
-  display: inline;
+  overflow: hidden;
 }
 
 .game-container {
@@ -219,14 +204,14 @@ a {
   height: 90vh;
   min-height: 750px;
   max-height: 960px;
-  overflow: hidden !important;
+  overflow: hidden;
 }
 
 .board-container {
   width: 90vw;
   max-width: 290px;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;

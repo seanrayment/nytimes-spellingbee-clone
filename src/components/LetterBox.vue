@@ -1,5 +1,5 @@
 <template>
-  <svg @click.stop="letterClicked" class="letter-box" viewBox="0 0 120 103.92304845413263">
+  <svg @mousedown="letterClicked" class="letter-box" viewBox="0 0 120 103.92304845413263">
     <polygon
       class="cell-fill"
       points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263"
@@ -18,6 +18,7 @@ export default {
   props: ["letter"],
   methods: {
     letterClicked: function () {
+      console.log("clicked");
       this.$emit("letter-clicked", this.letter);
     },
   },

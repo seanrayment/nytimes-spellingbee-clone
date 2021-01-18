@@ -38,7 +38,7 @@ export default {
     fetchGames: async function() {
       try {
         const response = await axios.get(
-          "http://dee219f3c20e.ngrok.io/game/"
+          "http://localhost:3000/game/"
         );
         console.log(response.data);
         this.gameObjs = response.data.map(record => { 
