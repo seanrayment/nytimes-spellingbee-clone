@@ -13,11 +13,11 @@ export default {
   components: {
   },
   props: {
-  	foundWords: Array
+    foundWords: Array
   },
   data: function () {
     return {
-    	isModal: false,
+      isModal: false
     };
   },
   computed: {
@@ -27,9 +27,9 @@ export default {
 
   },
   methods: {
-  	expandWords: function() {
-  		this.isModal = !this.isModal;
-  	}
+    expandWords: function() {
+      this.isModal = !this.isModal;
+    }
   },
 };
 </script>
@@ -74,7 +74,8 @@ export default {
 	left: 50%;
 	transform: translate(-50%, 0);
   overflow-y: scroll;
-  border-radius: 0px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 1px 0px;
   transition: min-height 0.2s;
   transition: max-height 0.2s;
 }

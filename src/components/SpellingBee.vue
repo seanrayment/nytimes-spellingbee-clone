@@ -12,6 +12,7 @@
 
       <div ref="game" class="board-container">
         <FoundWords :foundWords="foundWords" />
+        <SubmitToast />
         <div class="letters-container">
           <LetterBox
             v-on:letter-clicked="letterClicked"
@@ -38,6 +39,7 @@
 import axios from "axios";
 import LetterBox from "./LetterBox.vue";
 import FoundWords from "./FoundWords.vue";
+import SubmitToast from "./SubmitToast.vue";
 import { confetti } from "dom-confetti";
 import _ from "lodash";
 
@@ -45,7 +47,8 @@ export default {
   name: "SpellingBee",
   components: {
     LetterBox,
-    FoundWords
+    FoundWords,
+    SubmitToast
   },
   props: {
     msg: String,
