@@ -5,13 +5,8 @@
       <el-progress class="progress" :text-inside="false" :percentage="gameProgress"></el-progress>
       <span class="user-input placeholder" v-if="enteredLetters === ''">Enter a word</span>
       <span v-else class="user-input">{{ enteredLetters }}</span>
-      <div>
-        <el-button @click="backspace" round>Delete</el-button>
-        <el-button @click="checkAnswer" type="primary" round>Enter</el-button>
-      </div>
-
       <div ref="game" class="board-container">
-        <FoundWords :foundWords="foundWords" />
+        <FoundWords :foundWords="reversedWords" />
         <SubmitToast />
         <div class="letters-container">
           <LetterBox
@@ -28,6 +23,7 @@
           />
         </div>
         <div class="button-container">
+          <el-button @click="backspace" round>Delete</el-button>
           <el-button @click="scramble" class="refresh-button" icon="el-icon-refresh" circle></el-button>
         </div>
       </div>
@@ -73,7 +69,16 @@ export default {
     };
   },
   computed: {
+    reversedWords: function () {
+      let reversed = this.foundWords;
+      reversed.reverse();
+      return reversed;
+    },
+
     totalScore: function () {
+      if (this.answers.length === 0) {
+        return undefined;
+      }
       let score = 0;
       this.answers.forEach((ans) => {
         if (ans.length === 4) {
@@ -86,6 +91,9 @@ export default {
     },
 
     winningScore: function () {
+      if (this.totalScore === undefined) {
+        return undefined;
+      }
       return Math.min(Math.floor(0.6 * this.totalScore), 200);
     },
 
@@ -105,7 +113,6 @@ export default {
     },
   },
   watch: {
-    // whenever question changes, this function will run
     foundWords: function () {
       if (this.currScore >= this.winningScore) {
         confetti(this.$refs.confetti, {
@@ -150,10 +157,9 @@ export default {
     keyPressed: function (letter) {
       if ((this.letters + this.centerLetter).includes(letter)) {
         this.enteredLetters += letter;
+        this.checkAnswer();
       } else if (letter == 'Backspace' || letter == 'Delete') {
         this.backspace();
-      } else if (letter == 'Enter') {
-        this.checkAnswer();
       }
     },
 
@@ -171,9 +177,9 @@ export default {
         const word = this.enteredLetters.toLowerCase();
         const score = (word.length === 4) ? 1 : word.length;
         this.foundWords.push(this.enteredLetters.toLowerCase());
+        this.enteredLetters = "";
         this.$store.commit('pushAnimation', score);
       }
-      this.enteredLetters = "";
     },
   },
 };
