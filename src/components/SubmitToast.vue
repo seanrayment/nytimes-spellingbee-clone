@@ -1,5 +1,5 @@
 <template>
-	<div class="toast-container">+4 points</div>
+	<div v-on:flash-points="animate" @animationend="nextAnimation()" class="toast-container" v-bind:class="{animate: animated}">+ {{animationValue}} points</div>
 </template>
 
 <script>
@@ -11,16 +11,43 @@ export default {
   },
   data: function () {
     return {
+		animated: false,
     };
   },
-  computed: {
-
-  },
+	computed: {
+	animations () {
+		return this.$store.state.animations;
+	},
+	animationValue () {
+		const val = this.$store.state.animations[this.$store.state.animations.length - 1];
+		console.log(val);
+		return val;
+	}
+	},
   watch: {
-
+	animations (newAnimations) {
+		if (newAnimations.length > 0 && !this.animated) {
+			console.log('more animations');
+			this.animated = true;
+		}
+	},
   },
   methods: {
-
+	animate: function() {
+		console.log("hello")
+		this.animated = true;
+	},
+	nextAnimation: async function() {
+		this.animated = false;
+		if (this.animations.length > 0) {
+			console.log("more animations");
+			const self = this
+			setTimeout(function() {
+				console.log('waited');
+				self.$store.commit('popAnimation');
+			}, 50);
+		}
+	}
   },
 };
 </script>
@@ -39,9 +66,12 @@ export default {
 		left: 50%;
 		transform: translate(-50%, -50%);
 		z-index: 5;
+		opacity: 0;
+	}
+
+	.animate {
 		animation-name: flash;
 		animation-duration: 0.5s;
-		opacity: 0;
 	}
 
 	@keyframes flash {

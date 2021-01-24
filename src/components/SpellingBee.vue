@@ -121,7 +121,7 @@ export default {
       try {
         console.log(this.$route.params.gameId)
         const response = await axios.get(
-          `http://localhost:3000/game/${this.$route.params.gameId}/`
+          `http://f767c91e79e0.ngrok.io/game/${this.$route.params.gameId}/`
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
@@ -168,7 +168,10 @@ export default {
         this.answers.includes(word) &&
         word.includes(this.centerLetter.toLowerCase())
       ) {
+        const word = this.enteredLetters.toLowerCase();
+        const score = (word.length === 4) ? 1 : word.length;
         this.foundWords.push(this.enteredLetters.toLowerCase());
+        this.$store.commit('pushAnimation', score);
       }
       this.enteredLetters = "";
     },
@@ -204,7 +207,7 @@ a {
 .game-container {
   width: 100%;
   position: relative;
-  height: 90vh;
+  height: 85vh;
   min-height: 750px;
   max-height: 960px;
   overflow: hidden;
@@ -214,7 +217,7 @@ a {
   width: 90vw;
   max-width: 290px;
   position: absolute;
-  top: 55%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -262,6 +265,8 @@ a {
 
 .progress {
   padding: 10px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .confetti-container {

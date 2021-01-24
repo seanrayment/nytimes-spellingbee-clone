@@ -39,7 +39,7 @@ export default {
 .found-words {
   max-width: 400px;
   border: 1px solid #ddd;
-  margin: 20px auto;
+  margin: 10px auto;
   border-radius: 8px;
   padding: 10px;
   overflow-x: scroll;
@@ -52,16 +52,15 @@ export default {
 
 .found-word {
   display: inline;
-  text-overflow: ellipsis;
 }
 
 .modal-container {
-  padding: 20px;
+  padding: 0;
   border-radius: 8px;
 }
 
 .modal-container-active {
-	position: absolute;
+/*	position: absolute;
 	display: block;
 	width: 90%;
   min-width: 300px;
@@ -77,15 +76,26 @@ export default {
   border-radius: 8px;
   box-shadow: 1px 1px 1px 0px;
   transition: min-height 0.2s;
-  transition: max-height 0.2s;
+  transition: max-height 0.2s;*/
+    position: fixed;
+    max-width: 100%;
+    margin: 0;
+    top: -45%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    display: flex;
+    background-color: white;
+    z-index: 4;
+    border: 1px solid #ddd;
 }
 
 .found-words-modal {
 	background: white;
-	overflow-x: hidden;
 	border: none;
-	overflow: visible;
-
+	overflow: scroll;
+  max-width: 100%
 }
 
 .found-words-modal > li {
@@ -99,7 +109,7 @@ export default {
 	display: inline-block;
   position: fixed;
   right: 5%;
-  top: 5%;
+  top: -43%;
 }
 
 .hidden {

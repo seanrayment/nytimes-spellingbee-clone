@@ -16,6 +16,7 @@ html {
   text-align: center;
   color: #2c3e50;
   overflow: hidden;
+  touch-action: none;
 }
 
 #nav {
@@ -30,9 +31,5 @@ html {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
-* {
-    touch-action: none;
-  }
 
 </style>
