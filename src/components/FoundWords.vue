@@ -89,6 +89,7 @@ export default {
     background-color: white;
     z-index: 4;
     border: 1px solid #ddd;
+    box-shadow: 0 4px 23px 0 rgba(0,0,0,0.08)
 }
 
 .found-words-modal {
