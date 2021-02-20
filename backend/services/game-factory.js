@@ -19,7 +19,7 @@ async function processWords() {
         const word = line.trim();
         dictWords.push(word);
         const cset = new Set(word.split(''));
-        if (cset.size === 7) {
+        if ((cset.size === 7) && !(cset.has('s'))) {
             pangrams.push(word);
         }
     }
