@@ -4,7 +4,12 @@
     <div class="game-container">
       <el-progress class="progress" :text-inside="false" :percentage="gameProgress"></el-progress>
       <span class="user-input placeholder" v-if="enteredLetters === ''">Enter a word</span>
-      <span v-else class="user-input">{{ enteredLetters }}</span>
+      <span v-else class="user-input">{{ enteredLetters.toUpperCase() }}</span>
+      <div>
+        <el-button @click="backspace" round>Delete</el-button>
+        <el-button @click="checkAnswer" type="primary" round>Enter</el-button>
+      </div>
+
       <div ref="game" class="board-container">
         <FoundWords :foundWords="reversedWords" />
         <SubmitToast />
@@ -13,17 +18,15 @@
             v-on:letter-clicked="letterClicked"
             class="center-tile"
             :letter="centerLetter"
-            :key="centerLetter"
           />
           <LetterBox
             v-on:letter-clicked="letterClicked"
-            v-for="letter in letters"
-            :key="letter"
+            v-for="(letter,index) in letters"
+            :key="`fruit-${index}`"
             :letter="letter"
           />
         </div>
         <div class="button-container">
-          <el-button @click="backspace" round>Delete</el-button>
           <el-button @click="scramble" class="refresh-button" icon="el-icon-refresh" circle></el-button>
         </div>
       </div>
@@ -109,7 +112,10 @@ export default {
       return score;
     },
     gameProgress: function () {
-      return Math.floor(this.currScore / this.winningScore * 100);
+      if (this.winningScore === undefined) {
+        return 0;
+      }
+      return Math.max(0, Math.min(Math.floor(this.currScore / this.winningScore * 100), 100));
     },
   },
   watch: {
@@ -128,7 +134,7 @@ export default {
       try {
         console.log(this.$route.params.gameId)
         const response = await axios.get(
-          `http://f767c91e79e0.ngrok.io/game/${this.$route.params.gameId}/`
+          `http://localhost:3000/game/${this.$route.params.gameId}/`
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
@@ -157,9 +163,10 @@ export default {
     keyPressed: function (letter) {
       if ((this.letters + this.centerLetter).includes(letter)) {
         this.enteredLetters += letter;
-        this.checkAnswer();
       } else if (letter == 'Backspace' || letter == 'Delete') {
         this.backspace();
+      } else if (letter == 'Enter') {
+        this.checkAnswer();
       }
     },
 
@@ -177,9 +184,9 @@ export default {
         const word = this.enteredLetters.toLowerCase();
         const score = (word.length === 4) ? 1 : word.length;
         this.foundWords.push(this.enteredLetters.toLowerCase());
-        this.enteredLetters = "";
         this.$store.commit('pushAnimation', score);
       }
+      this.enteredLetters = "";
     },
   },
 };
