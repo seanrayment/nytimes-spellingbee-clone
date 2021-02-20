@@ -2,8 +2,10 @@
   <div class="game-picker">
     <h1 class="games-header">Current Games</h1>
     <ul class="game-list">
-      <li @click="navigateToGame(game.id)" class="game-box" v-for="game in gameObjs" :key="game.id">
-        <router-link :to="{name: 'home', params: { gameId: game.id}}">{{ new Date(game.date).toDateString() }}</router-link>
+      <li class="game-box" v-for="game in gameObjs" :key="game.id">
+        <el-card class="box-card game-list-card">
+          <router-link class="game-link" :to="{name: 'home', params: { gameId: game.id}}">{{ new Date(game.date).toDateString() }}</router-link>
+        </el-card>
       </li>
     </ul>
   </div>
@@ -38,7 +40,7 @@ export default {
     fetchGames: async function() {
       try {
         const response = await axios.get(
-          "http://f767c91e79e0.ngrok.io/game/"
+          "http://localhost:3000/game/"
         );
         console.log(response.data);
         this.gameObjs = response.data.map(record => { 
@@ -59,16 +61,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .game-list {
-    width: 95%;
-  }
 
   .game-box {
-    width: 100%;
-    border: 1px solid #ddd;
+    width: 95%;
     display: inline-block;
-    padding: 10px 0;
-    margin=: 0 auto;
+    margin: 10px auto;
     text-align: center;
+  }
+
+  .game-list-card {
+    margin: 0 auto;
+  }
+
+  .game-link {
+    text-decoration: none;
+    font-weight: bold;
   }
 </style>
