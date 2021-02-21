@@ -4,7 +4,11 @@
     <ul class="game-list">
       <li class="game-box" v-for="game in gameObjs" :key="game.id">
         <el-card class="box-card game-list-card">
-          <router-link class="game-link" :to="{name: 'home', params: { gameId: game.id}}">{{ new Date(game.date).toDateString() }}</router-link>
+          <router-link
+            class="game-link"
+            :to="{ name: 'home', params: { gameId: game.id } }"
+            >{{ new Date(game.date).toDateString() }}</router-link
+          >
         </el-card>
       </li>
     </ul>
@@ -17,8 +21,7 @@ import axios from "axios";
 
 export default {
   name: "GamePicker",
-  components: {
-  },
+  components: {},
   props: {
     msg: String,
   },
@@ -30,20 +33,14 @@ export default {
       gameObjs: [],
     };
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   methods: {
-    fetchGames: async function() {
+    fetchGames: async function () {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/game/"
-        );
+        const response = await axios.get("http://localhost:3000/game/");
         console.log(response.data);
-        this.gameObjs = response.data.map(record => { 
+        this.gameObjs = response.data.map((record) => {
           console.log(record._id);
           return { id: record._id, date: record.date };
         });
@@ -53,28 +50,31 @@ export default {
     },
 
     navigateToGame(gameId) {
-      this.$router.push({name: 'home', params: { gameId: gameId}});
-    }
+      this.$router.push({ name: "home", params: { gameId: gameId } });
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.game-box {
+  width: 95%;
+  max-width: 400px;
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+}
+.game-list-card {
+  margin: 0 auto;
+}
 
-  .game-box {
-    width: 95%;
-    display: inline-block;
-    margin: 10px auto;
-    text-align: center;
-  }
+.game-list-card:hover {
+  background-color: #eee;
+}
 
-  .game-list-card {
-    margin: 0 auto;
-  }
-
-  .game-link {
-    text-decoration: none;
-    font-weight: bold;
-  }
+.game-link {
+  text-decoration: none;
+  font-weight: bold;
+}
 </style>

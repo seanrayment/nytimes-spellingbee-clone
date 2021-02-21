@@ -316,4 +316,17 @@ a {
   left: 50%;
   z-index: 10000;
 }
+
+@media (max-width: 768px) {
+  .game-layout-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .game-layout-container > * {
+    padding: 5px;
+  }
+}
 </style>

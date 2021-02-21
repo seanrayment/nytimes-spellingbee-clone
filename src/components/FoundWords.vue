@@ -1,9 +1,5 @@
 <template>
-  <div
-    @click="expandWords"
-    class="modal-container"
-    v-bind:class="{ 'expanded-container': isModal }"
-  >
+  <div @click="expandWords" class="modal-container">
     <el-button
       type="primary"
       icon="el-icon-close"
@@ -12,7 +8,8 @@
       v-bind:class="{ hidden: !isModal }"
       circle
     ></el-button>
-    <ul class="found-words" v-bind:class="{ 'found-words-modal': isModal }">
+    <p class="found-words-header">Found words</p>
+    <ul class="found-words" v-bind:class="{ 'expanded-container': isModal }">
       <li v-for="word in foundWords" :key="word" class="found-word">
         {{ word }}
       </li>
@@ -36,6 +33,7 @@ export default {
   watch: {},
   methods: {
     expandWords: function () {
+      console.log("expand");
       this.isModal = !this.isModal;
     },
   },
@@ -44,7 +42,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.expanded-container > ul > li {
+.found-words-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+.expanded-container > li {
   display: block;
 }
 .found-words {
@@ -67,6 +71,7 @@ export default {
   display: inline;
 }
 
+/*
 .modal-container {
   display: inline-block;
   padding: 0;
@@ -74,7 +79,7 @@ export default {
 }
 
 .modal-container-active {
-  /*	position: absolute;
+  position: absolute;
 	display: block;
 	width: 90%;
   min-width: 300px;
@@ -90,7 +95,7 @@ export default {
   border-radius: 8px;
   box-shadow: 1px 1px 1px 0px;
   transition: min-height 0.2s;
-  transition: max-height 0.2s;*/
+  transition: max-height 0.2s;
   position: fixed;
   max-width: 100%;
   margin: 0;
@@ -118,6 +123,7 @@ export default {
   padding: 5px;
   border: none;
 }
+*/
 
 .x-button {
   display: inline-block;
@@ -128,5 +134,42 @@ export default {
 
 .hidden {
   display: none;
+}
+
+@media (min-width: 768px) {
+  .found-words {
+    height: 65vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    border: 1px solid #eee;
+  }
+
+  .found-words > li {
+    display: block;
+    padding: 2px;
+    margin: 0 auto;
+  }
+
+  .found-word {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 768px) {
+  .expanded-container {
+    height: 65vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    border: 1px solid #eee;
+  }
+
+  .expanded-container > .found-word {
+    display: block;
+    padding: 2px;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
 </style>
