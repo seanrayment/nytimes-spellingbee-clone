@@ -1,53 +1,66 @@
 <template>
-	<div @click="expandWords" class='modal-container' v-bind:class="{'modal-container-active': isModal}">
-		<el-button type="primary" icon="el-icon-close" @click.stop="expandWords" class="x-button button" v-bind:class="{hidden: !isModal}" circle></el-button>
-		<ul class="found-words" v-bind:class="{ 'found-words-modal': isModal}">
-			<li v-for="word in foundWords" :key="word" class="found-word">{{ word }}</li>
-		</ul>
-	</div>
+  <div
+    @click="expandWords"
+    class="modal-container"
+    v-bind:class="{ 'expanded-container': isModal }"
+  >
+    <el-button
+      type="primary"
+      icon="el-icon-close"
+      @click.stop="expandWords"
+      class="x-button button"
+      v-bind:class="{ hidden: !isModal }"
+      circle
+    ></el-button>
+    <ul class="found-words" v-bind:class="{ 'found-words-modal': isModal }">
+      <li v-for="word in foundWords" :key="word" class="found-word">
+        {{ word }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
   name: "FoundWords",
-  components: {
-  },
+  components: {},
   props: {
-    foundWords: Array
+    foundWords: Array,
   },
   data: function () {
     return {
-      isModal: false
+      isModal: false,
     };
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   methods: {
-    expandWords: function() {
+    expandWords: function () {
       this.isModal = !this.isModal;
-    }
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.expanded-container > ul > li {
+  display: block;
+}
 .found-words {
-  max-width: 400px;
+  width: 360px;
+  max-width: 360px;
   border: 1px solid #ddd;
   margin: 10px auto;
   border-radius: 8px;
   padding: 10px;
   overflow-x: scroll;
-  overflow-y: hidden;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .found-words:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .found-word {
@@ -55,12 +68,13 @@ export default {
 }
 
 .modal-container {
+  display: inline-block;
   padding: 0;
   border-radius: 8px;
 }
 
 .modal-container-active {
-/*	position: absolute;
+  /*	position: absolute;
 	display: block;
 	width: 90%;
   min-width: 300px;
@@ -77,44 +91,42 @@ export default {
   box-shadow: 1px 1px 1px 0px;
   transition: min-height 0.2s;
   transition: max-height 0.2s;*/
-    position: fixed;
-    max-width: 100%;
-    margin: 0;
-    top: -45%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    display: flex;
-    background-color: white;
-    z-index: 4;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 23px 0 rgba(0,0,0,0.08)
+  position: fixed;
+  max-width: 100%;
+  margin: 0;
+  top: -45%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  display: flex;
+  background-color: white;
+  z-index: 4;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 23px 0 rgba(0, 0, 0, 0.08);
 }
 
 .found-words-modal {
-	background: white;
-	border: none;
-	overflow: scroll;
-  max-width: 100%
+  background: white;
+  border: none;
+  overflow: scroll;
+  max-width: 100%;
 }
 
 .found-words-modal > li {
-	display: block;
-	padding: 5px;
+  display: block;
+  padding: 5px;
   border: none;
-
 }
 
 .x-button {
-	display: inline-block;
+  display: inline-block;
   position: fixed;
   right: 5%;
   top: -43%;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
-
 </style>

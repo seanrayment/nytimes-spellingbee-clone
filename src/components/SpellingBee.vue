@@ -2,32 +2,45 @@
   <div class="hello">
     <div ref="confetti" class="confetti-container"></div>
     <div class="game-container">
-      <el-progress class="progress" :text-inside="false" :percentage="gameProgress"></el-progress>
-      <span class="user-input placeholder" v-if="enteredLetters === ''">Enter a word</span>
+      <el-progress
+        class="progress"
+        :text-inside="false"
+        :percentage="gameProgress"
+      ></el-progress>
+      <span class="user-input placeholder" v-if="enteredLetters === ''"
+        >Enter a word</span
+      >
       <span v-else class="user-input">{{ enteredLetters.toUpperCase() }}</span>
       <div>
         <el-button @click="backspace" round>Delete</el-button>
         <el-button @click="checkAnswer" type="primary" round>Enter</el-button>
       </div>
 
-      <div ref="game" class="board-container">
+      <div class="game-layout-container">
         <FoundWords :foundWords="reversedWords" />
-        <SubmitToast />
-        <div class="letters-container">
-          <LetterBox
-            v-on:letter-clicked="letterClicked"
-            class="center-tile"
-            :letter="centerLetter"
-          />
-          <LetterBox
-            v-on:letter-clicked="letterClicked"
-            v-for="(letter,index) in letters"
-            :key="`fruit-${index}`"
-            :letter="letter"
-          />
-        </div>
-        <div class="button-container">
-          <el-button @click="scramble" class="refresh-button" icon="el-icon-refresh" circle></el-button>
+        <div ref="game" class="board-container">
+          <SubmitToast />
+          <div class="letters-container">
+            <LetterBox
+              v-on:letter-clicked="letterClicked"
+              class="center-tile"
+              :letter="centerLetter"
+            />
+            <LetterBox
+              v-on:letter-clicked="letterClicked"
+              v-for="(letter, index) in letters"
+              :key="`fruit-${index}`"
+              :letter="letter"
+            />
+          </div>
+          <div class="button-container">
+            <el-button
+              @click="scramble"
+              class="refresh-button"
+              icon="el-icon-refresh"
+              circle
+            ></el-button>
+          </div>
         </div>
       </div>
     </div>
@@ -47,7 +60,7 @@ export default {
   components: {
     LetterBox,
     FoundWords,
-    SubmitToast
+    SubmitToast,
   },
   props: {
     msg: String,
@@ -56,8 +69,8 @@ export default {
     console.log(this.$route.params);
     console.log("fetching game data");
     this.fetchGame();
-    let self = this
-    window.addEventListener('keydown', (event) => {
+    let self = this;
+    window.addEventListener("keydown", (event) => {
       console.log(event.key);
       self.keyPressed(event.key);
     });
@@ -115,7 +128,10 @@ export default {
       if (this.winningScore === undefined) {
         return 0;
       }
-      return Math.max(0, Math.min(Math.floor(this.currScore / this.winningScore * 100), 100));
+      return Math.max(
+        0,
+        Math.min(Math.floor((this.currScore / this.winningScore) * 100), 100)
+      );
     },
   },
   watch: {
@@ -129,10 +145,9 @@ export default {
     },
   },
   methods: {
-
     fetchGame: async function () {
       try {
-        console.log(this.$route.params.gameId)
+        console.log(this.$route.params.gameId);
         const response = await axios.get(
           `http://localhost:3000/game/${this.$route.params.gameId}/`
         );
@@ -163,9 +178,9 @@ export default {
     keyPressed: function (letter) {
       if ((this.letters + this.centerLetter).includes(letter)) {
         this.enteredLetters += letter;
-      } else if (letter == 'Backspace' || letter == 'Delete') {
+      } else if (letter == "Backspace" || letter == "Delete") {
         this.backspace();
-      } else if (letter == 'Enter') {
+      } else if (letter == "Enter") {
         this.checkAnswer();
       }
     },
@@ -182,9 +197,9 @@ export default {
         word.includes(this.centerLetter.toLowerCase())
       ) {
         const word = this.enteredLetters.toLowerCase();
-        const score = (word.length === 4) ? 1 : word.length;
+        const score = word.length === 4 ? 1 : word.length;
         this.foundWords.push(this.enteredLetters.toLowerCase());
-        this.$store.commit('pushAnimation', score);
+        this.$store.commit("pushAnimation", score);
       }
       this.enteredLetters = "";
     },
@@ -226,13 +241,26 @@ a {
   overflow: hidden;
 }
 
+.game-layout-container {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-layout-container > * {
+  padding: 15px;
+}
+
 .board-container {
-  width: 90vw;
-  max-width: 290px;
-  position: absolute;
-  top: 52%;
+  /* width: 90vw; */
+  min-width: 290px;
+  /* position: absolute; */
+  /* top: 52%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   z-index: 3;
 }
 
