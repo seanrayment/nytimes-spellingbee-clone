@@ -1,6 +1,9 @@
 <template>
   <svg
+    v-on:touchstart="letterClicked"
+    v-on:touchend="letterUnclicked"
     @mousedown="letterClicked"
+    @mouseup="letterUnclicked"
     @animationend="resetAnimation"
     class="letter-box"
     v-bind:class="{ diffanimate: animated }"
@@ -34,6 +37,10 @@ export default {
       this.$emit("letter-clicked", this.letter);
     },
 
+    letterUnclicked: function () {
+      this.animated = false;
+    },
+
     resetAnimation: function () {
       this.animated = false;
     },
@@ -49,6 +56,7 @@ export default {
   width: 40%;
   height: calc(100% / 3);
   fill: #ccc;
+  transition: height 0.1s;
 }
 
 .letter-box:hover {
@@ -56,8 +64,9 @@ export default {
 }
 
 .diffanimate {
-  animation-name: pop;
-  animation-duration: 0.2s;
+  /* animation-name: pop; */
+  height: calc(100% / 3.1);
+  animation-duration: 0.1s;
 }
 
 @keyframes pop {

@@ -18,7 +18,11 @@ export default new Vuex.Store({
 	},
 	pushAnimation (state, points) {
 		const newArr = state.animations;
-		newArr.push(points);
+		if (points >= 7) {
+			newArr.push(`Pangram ${points}`);
+		} else {
+			newArr.push(points);
+		}
 		state.animations = newArr;
 	},
 	popAnimation (state) {
