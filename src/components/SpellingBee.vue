@@ -11,10 +11,7 @@
         >Enter a word</span
       >
       <span v-else class="user-input">{{ enteredLetters.toUpperCase() }}</span>
-      <div>
-        <el-button @click="backspace" round>Delete</el-button>
-        <el-button @click="checkAnswer" type="primary" round>Enter</el-button>
-      </div>
+      <div></div>
 
       <div class="game-layout-container">
         <FoundWords :foundWords="reversedWords" />
@@ -34,12 +31,17 @@
             />
           </div>
           <div class="button-container">
+            <el-button @click="backspace" round>Delete</el-button>
+
             <el-button
               @click="scramble"
               class="refresh-button"
               icon="el-icon-refresh"
               circle
             ></el-button>
+            <el-button @click="checkAnswer" type="primary" round
+              >Enter</el-button
+            >
           </div>
         </div>
       </div>
@@ -310,6 +312,9 @@ a {
 }
 
 .user-input {
+  max-width: 90%;
+  text-overflow: ellipsis;
+  overflow: hidden;
   font-size: 36px;
   font-weight: 700;
   display: inline-block;
