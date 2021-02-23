@@ -75,6 +75,20 @@ export default {
       self.keyPressed(event.key);
     });
   },
+  mounted: function () {
+    // retrieve local storage values
+    const gameKey = this.$route.params.gameId;
+    if (localStorage[`${gameKey}-found-words`]) {
+      this.foundWords = JSON.parse(
+        localStorage.getItem(`${gameKey}-found-words`)
+      );
+    }
+    if (localStorage[`${gameKey}-entered-letters`]) {
+      this.enteredLetters = JSON.parse(
+        localStorage.getItem(`${gameKey}-entered-letters`)
+      );
+    }
+  },
   data: function () {
     return {
       letters: ["", "", "", "", "", ""],
@@ -135,13 +149,23 @@ export default {
     },
   },
   watch: {
-    foundWords: function () {
+    foundWords: function (val) {
+      localStorage.setItem(
+        `${this.$route.params.gameId}-found-words`,
+        JSON.stringify(val)
+      );
       if (this.currScore >= this.winningScore) {
         confetti(this.$refs.confetti, {
           duration: 5000,
           elementCount: 200,
         });
       }
+    },
+    enteredLetters: function (val) {
+      localStorage.setItem(
+        `${this.$route.params.gameId}-entered-letters`,
+        JSON.stringify(val)
+      );
     },
   },
   methods: {

@@ -2,14 +2,14 @@
   <div @click="expandWords" class="modal-container">
     <p class="found-words-header">Found words</p>
     <ul class="found-words" v-bind:class="{ 'expanded-container': isModal }">
-      <el-button
+      <!-- <el-button
         type="primary"
         icon="el-icon-close"
         @click.stop="expandWords"
         class="x-button button"
         v-bind:class="{ hidden: !isModal }"
         circle
-      ></el-button>
+      ></el-button> -->
       <li v-for="word in foundWords" :key="word" class="found-word">
         {{ word }}
       </li>
@@ -165,11 +165,11 @@ export default {
     font-weight: 500;
   }
 
-  .expanded-container > .x-button {
+  /* .expanded-container > .x-button {
     display: inline-block;
     position: fixed;
     right: 5%;
     top: -43%;
-  }
+  } */
 }
 </style>

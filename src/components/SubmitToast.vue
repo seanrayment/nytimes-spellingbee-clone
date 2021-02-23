@@ -74,6 +74,7 @@ export default {
   transform: translate(-50%, -50%);
   z-index: 5;
   opacity: 0;
+  user-select: none;
 }
 
 .animate {

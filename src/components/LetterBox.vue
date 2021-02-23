@@ -1,7 +1,5 @@
 <template>
   <svg
-    v-on:touchstart="letterClicked"
-    v-on:touchend="letterUnclicked"
     @mousedown="letterClicked"
     @mouseup="letterUnclicked"
     @animationend="resetAnimation"
