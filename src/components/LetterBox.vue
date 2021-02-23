@@ -1,5 +1,6 @@
 <template>
   <svg
+    @touchstart="letterClicked"
     @mousedown="letterClicked"
     @mouseup="letterUnclicked"
     @animationend="resetAnimation"
