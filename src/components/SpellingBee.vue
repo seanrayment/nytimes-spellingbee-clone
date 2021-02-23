@@ -173,7 +173,7 @@ export default {
       try {
         console.log(this.$route.params.gameId);
         const response = await axios.get(
-          `http://localhost:3000/game/${this.$route.params.gameId}/`
+          `${process.env.VUE_APP_ROOT_API}/game/${this.$route.params.gameId}/`
         );
         console.log(response.data);
         this.letters = response.data.letters.filter(
