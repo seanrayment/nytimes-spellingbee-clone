@@ -1,4 +1,3 @@
-require('dotenv').config();
 const Game = require('../models/game');
 const readline = require('readline');
 const mongoose = require('mongoose');
