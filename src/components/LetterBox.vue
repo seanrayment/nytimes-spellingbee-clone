@@ -1,6 +1,6 @@
 <template>
   <svg
-    @touchstart="letterClicked"
+    @touchstart.prevent="letterClicked"
     @mousedown="letterClicked"
     @mouseup="letterUnclicked"
     @animationend="resetAnimation"
