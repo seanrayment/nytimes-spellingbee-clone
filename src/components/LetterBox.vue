@@ -1,6 +1,7 @@
 <template>
   <svg
-    @touchstart.prevent="letterClicked"
+    @touchstart.prevent="letterTapped"
+    @touchend.prevent="letterUntapped"
     @mousedown="letterClicked"
     @mouseup="letterUnclicked"
     @animationend="resetAnimation"
@@ -37,6 +38,16 @@ export default {
     },
 
     letterUnclicked: function () {
+      this.animated = false;
+    },
+
+    letterTapped: function () {
+      this.animated = true;
+      console.log("clicked");
+      this.$emit("letter-clicked", this.letter);
+    },
+
+    letterUntapped: function () {
       this.animated = false;
     },
 
