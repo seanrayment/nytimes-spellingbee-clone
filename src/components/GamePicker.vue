@@ -38,7 +38,9 @@ export default {
   methods: {
     fetchGames: async function () {
       try {
-        const response = await axios.get("http://localhost:3000/game/");
+        const response = await axios.get(
+          `${process.env.VUE_APP_ROOT_API}/game/`
+        );
         console.log(response.data);
         this.gameObjs = response.data.map((record) => {
           console.log(record._id);
