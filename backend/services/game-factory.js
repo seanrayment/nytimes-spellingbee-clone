@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 
 async function processWords() {
-    const fileStream = fs.createReadStream('./words.txt', 'latin1');
+    const fileStream = fs.createReadStream('./words_revised.txt', 'latin1');
 
     const rl = readline.createInterface({
         input: fileStream,
