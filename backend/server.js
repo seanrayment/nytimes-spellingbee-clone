@@ -58,11 +58,14 @@ app.use('/subscribers', subscribersRouter);
 const gameRouter = require('./routes/game');
 app.use('/game', gameRouter);
 
-const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
+if (process.env.ENVIRONMENT != 'production') {
+  const usersRouter = require('./routes/users');
+  app.use('/users', usersRouter);
 
-const adminRouter = require('./routes/admin');
-app.use('/admin', adminRouter);
+  const adminRouter = require('./routes/admin');
+  app.use('/admin', adminRouter);
+}
+
 
 // app.get('/admin', function (req, res) {
 
